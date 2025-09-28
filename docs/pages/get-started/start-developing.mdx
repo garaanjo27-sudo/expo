@@ -1,97 +1,113 @@
----
-title: Start developing
-description: Make your first change to an Expo project and see it live on your device.
-hideTOC: true
----
+import React from "react";
+import { View, Text, Image } from "react-native";
+import { Button } from "@/components/ui/button";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import { ProjectStructure } from '~/scenes/get-started/start-developing/ProjectStructure';
-import { TemplateFeatures } from '~/scenes/get-started/start-developing/TemplateFeatures';
-import { Collapsible } from '~/ui/components/Collapsible';
-import { ContentSpotlight } from '~/ui/components/ContentSpotlight';
-import { Terminal, DiffBlock } from '~/ui/components/Snippet';
-import { Step } from '~/ui/components/Step';
+const Stack = createStackNavigator();
 
-<Step label="1">
-## Start a development server
-To start the development server, run the following command:
+// Tela Inicial
+function HomeScreen({ navigation }) {
+  return (
+    <View className="flex-1 items-center justify-center bg-black px-6">
+      {/* Logo */}
+      <Image
+        source={{
+          uri: "https://cdn.openai.com/file-A_vector-based_logo_for_Studio_Solubro_Vision.png",
+        }}
+        style={{ width: 200, height: 200, resizeMode: "contain" }}
+      />
 
-<Terminal cmd={['$ npx expo start']} />
+      {/* Título */}
+      <Text className="text-yellow-500 text-2xl font-bold mt-6 text-center">
+        Studio Solubro Vision
+      </Text>
 
-</Step>
+      {/* Subtítulo */}
+      <Text className="text-yellow-400 text-base mt-2 text-center">
+        Qualidade Ampliada
+      </Text>
 
-<Step label="2">
-## Open the app on your device
+      {/* Botões principais */}
+      <View className="mt-10 w-full gap-4">
+        <Button
+          className="bg-yellow-500 rounded-2xl p-4 w-full"
+          onPress={() => navigation.navigate("Portfolio")}
+        >
+          <Text className="text-black font-semibold text-lg">Ver Portfólio</Text>
+        </Button>
 
-After running the command above, you will see a QR code in your terminal. Scan this QR code to open the app on your device.
+        <Button
+          className="bg-yellow-500 rounded-2xl p-4 w-full"
+          onPress={() => navigation.navigate("Agendamento")}
+        >
+          <Text className="text-black font-semibold text-lg">
+            Agendar Ensaio
+          </Text>
+        </Button>
 
-If you're using an Android Emulator or iOS Simulator, you can press <kbd>a</kbd> or <kbd>i</kbd> respectively to open the app.
+        <Button
+          className="bg-yellow-500 rounded-2xl p-4 w-full"
+          onPress={() => navigation.navigate("Galeria")}
+        >
+          <Text className="text-black font-semibold text-lg">Minha Galeria</Text>
+        </Button>
+      </View>
+    </View>
+  );
+}
 
-<Collapsible summary="Having problems?">
+// Tela Portfólio
+function PortfolioScreen() {
+  return (
+    <View className="flex-1 items-center justify-center bg-black px-6">
+      <Text className="text-yellow-500 text-xl font-bold">Portfólio</Text>
+      <Text className="text-white mt-2 text-center">
+        Aqui você verá os trabalhos realizados pelo estúdio.
+      </Text>
+    </View>
+  );
+}
 
-Make sure you are on the same Wi-Fi network on your computer and your device.
+// Tela Agendamento
+function AgendamentoScreen() {
+  return (
+    <View className="flex-1 items-center justify-center bg-black px-6">
+      <Text className="text-yellow-500 text-xl font-bold">Agendar Ensaio</Text>
+      <Text className="text-white mt-2 text-center">
+        Aqui o cliente poderá marcar ensaios fotográficos ou vídeos.
+      </Text>
+    </View>
+  );
+}
 
-If it still doesn't work, it may be due to the router configuration &mdash; this is common for public networks. You can work around this by choosing the **Tunnel** connection type when starting the development server, then scanning the QR code again.
+// Tela Galeria
+function GaleriaScreen() {
+  return (
+    <View className="flex-1 items-center justify-center bg-black px-6">
+      <Text className="text-yellow-500 text-xl font-bold">Minha Galeria</Text>
+      <Text className="text-white mt-2 text-center">
+        Área exclusiva para cada cliente acessar suas fotos e vídeos.
+      </Text>
+    </View>
+  );
+}
 
-<Terminal cmd={['$ npx expo start --tunnel']} />
-
-> Using the **Tunnel** connection type will make the app reloads considerably slower than on **LAN** or **Local**, so it's best to avoid tunnel when possible. You may want to install and use an emulator or simulator to speed up development if **Tunnel** is required to access your machine from another device on your network.
-
-</Collapsible>
-
-</Step>
-
-<Step label="3">
-
-## Make your first change
-
-Open the **app/(tabs)/index.tsx** file in your code editor and make a change.
-
-<DiffBlock
-  raw={`diff --git a/app/(tabs)/index.tsx b/app/(tabs)/index.tsx
-index 45cfa0e..4d1b384 100644
---- a/app/(tabs)/index.tsx
-+++ b/app/(tabs)/index.tsx
-@@ -17,7 +17,7 @@ export default function HomeScreen() {
-      }
-    >
-      <ThemedView style={styles.titleContainer}>
--       <ThemedText type="title">Welcome!</ThemedText>
-+       <ThemedText type="title">Hello World!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-  `}
-/>
-
-<Collapsible summary="Changes not showing up on your device?">
-
-Expo Go is configured by default to automatically reload the app whenever a file is changed, but let's make sure to go over the steps to enable it in case somehow things aren't working.
-
-- Make sure you have the [development mode enabled in Expo CLI](/workflow/development-mode#development-mode).
-- Close the Expo app and reopen it.
-- Once the app is open again, shake your device to reveal the developer menu. If you are using an emulator, press <kbd>Ctrl</kbd> + <kbd>M</kbd> for Android or <kbd>Cmd ⌘</kbd> + <kbd>D</kbd> for iOS.
-- If you see **Enable Fast Refresh**, press it. If you see **Disable Fast Refresh**, dismiss the developer menu. Now try making another change.
-
-  <ContentSpotlight
-    alt="Developer menu in Expo Go app."
-    src="/static/images/get-started/developer-menu.png"
-    className="max-w-[540px]"
-  />
-
-</Collapsible>
-
-</Step>
-
----
-
-## File structure
-
-Below, you can get familiar with the default project's file structure:
-
-<ProjectStructure />
-
-## Features
-
-The default project template has the following features:
-
-<TemplateFeatures />
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: true,
+          headerStyle: { backgroundColor: "#000" },
+          headerTintColor: "#FFD700",
+        }}
+      >
+        <Stack.Screen name="Início" component={HomeScreen} />
+        <Stack.Screen name="Portfolio" component={PortfolioScreen} />
+        <Stack.Screen name="Agendamento" component={AgendamentoScreen} />
+        <Stack.Screen name="Galeria" component={GaleriaScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
